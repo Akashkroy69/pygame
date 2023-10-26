@@ -19,6 +19,10 @@ player = pygame.Rect((350,350,50,50))
 run = True
 # 2. game loop
 while run:
+#   in each loop the following code will fill the canvas with fresh color so
+# previous trail will be covered.
+  screen.fill((0,0,0))
+
 #  drawing the player object
   pygame.draw.rect(screen,(117,66,247),player)
 
