@@ -1,5 +1,5 @@
 # step 1:  pip install pygame python package installer
-import pygame
+import pygame as pygame
 
 
 # 3 important parts: 1. game window, 2. game loop 3. event handler
@@ -10,11 +10,12 @@ pygame.init()
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 800
 
-# SCREEN SET UP: 1. game window
+# step 3: SCREEN SET UP: game window
 screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
+pygame.display.set_caption("Introduction")
 
 # player step 4
-player = pygame.Rect((350,350,50,50))
+player = pygame.Rect((350,350,50,20))
 
 run = True
 # 2. game loop
