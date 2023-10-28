@@ -13,12 +13,17 @@ pygame.display.set_caption("Flappy In PyGame")
 
 # load image
 background = pygame.image.load(r'Codingal\PYGAME\Flappy_With_Pygame\flapbg.png')
+ground = pygame.image.load(r'Codingal\PYGAME\Flappy_With_Pygame\ground.png')
 
 
 # main game loop
 runningStatus = True
 while runningStatus:
+
+    # to render the image for background
     screen.blit(background,(0,0))
+    # to render image for ground
+    screen.blit(ground,(0,158)) 
 
     # for closing the window
     for event in pygame.event.get():
