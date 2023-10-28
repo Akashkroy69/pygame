@@ -15,15 +15,23 @@ pygame.display.set_caption("Flappy In PyGame")
 background = pygame.image.load(r'Codingal\PYGAME\Flappy_With_Pygame\flapbg.png')
 ground = pygame.image.load(r'Codingal\PYGAME\Flappy_With_Pygame\ground.png')
 
+# game variables 
+ground_scroll = 0
+scroll_speed = 0.1
+
+runningStatus = True
+
+
 
 # main game loop
-runningStatus = True
 while runningStatus:
 
     # to render the image for background
     screen.blit(background,(0,0))
     # to render image for ground
-    screen.blit(ground,(0,158)) 
+    screen.blit(ground,(ground_scroll,158))
+    ground_scroll -= scroll_speed
+
 
     # for closing the window
     for event in pygame.event.get():
