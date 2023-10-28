@@ -15,9 +15,12 @@ pygame.display.set_caption("Flappy In PyGame")
 background = pygame.image.load(r'Codingal\PYGAME\Flappy_With_Pygame\flapbg.png')
 ground = pygame.image.load(r'Codingal\PYGAME\Flappy_With_Pygame\ground.png')
 
+# setting the frame rate
+clock = pygame.time.Clock()
+fps = 60
 # game variables 
 ground_scroll = 0
-scroll_speed = 0.1
+scroll_speed = 4
 
 runningStatus = True
 
@@ -25,6 +28,9 @@ runningStatus = True
 
 # main game loop
 while runningStatus:
+
+    # setting up the frame rate
+    clock.tick(fps)
 
     # to render the image for background
     screen.blit(background,(0,0))
