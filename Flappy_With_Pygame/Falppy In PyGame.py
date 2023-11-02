@@ -26,10 +26,14 @@ class Bird(pygame.sprite.Sprite):
         # Sprite class has already functions that will updat, draw,load,render the images.
         # we don't need to call load or blit function externally
         pygame.sprite.Sprite.__init__(self)
-
+        # useful variables for the bird
         self.images= []
         self.index = 0
         self.counter = 0
+        self.gravity = 0
+        self.groundStartsAt = 668
+        self.SPACE_clicked = False
+
 
 
         for birdNum in range(1,4): 
@@ -41,17 +45,36 @@ class Bird(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = [x,y]
 
-    # To hadnle the animation overriding
+    # To hadnle the animation overriding 
     def update(self):
+        # bird fall logic
+        if self.gravity < 3:
+            self.gravity += 5
+        if self.rect.y < self.groundStartsAt:
+           self.rect.y += self.gravity
+
+    
+
+
         # handles the animation
         self.counter += 1
+        flapGapFactor = 10
 
-        if self.counter>=10:
+        if self.counter>=flapGapFactor:
           self.counter = 0
           self.index += 1
           if self.index>=len(self.images):
               self.index = 0
         self.image = self.images[self.index]
+
+            # bird fly logic
+        if pygame.key.get_pressed()[K_SPACE] and self.rect.y>0 and self.SPACE_clicked == False:
+            # self.SPACE_clicked = True
+            self.rect.y -= 20
+            # self.image = pygame.transform.rotate(self.images[self.index],90)
+
+        # bird rotation
+        self.image = pygame.transform.rotate(self.images[self.index],self.gravity*-2)
         
 
 
@@ -69,11 +92,7 @@ fps = 60
 # game variables 
 ground_scroll = 0
 scroll_speed = 3
-
 runningStatus = True
-
-
-
 # main game loop
 while runningStatus:
 
