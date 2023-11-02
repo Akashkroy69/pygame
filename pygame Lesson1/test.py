@@ -1,43 +1,40 @@
-# 1. screen 2. game loop/main loop 3. event handler
-# step 1 : import
 import pygame
-
-# initialize the pygame module
 pygame.init()
 
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
+# Screen dimensions
+screen_width, screen_height = 400, 400
+screen = pygame.display.set_mode((screen_width, screen_height))
+pygame.display.set_caption("Sprite Example")
 
-# Screen setup
-screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
-pygame.display.set_caption("Introduction")
+# Colors
+white = (255, 255, 255)
 
-#player 
-player = pygame.Rect((100,100,50,50))
+# Create a sprite
+sprite_width, sprite_height = 50, 50
+sprite_x, sprite_y = screen_width // 2, screen_height // 2
+sprite = pygame.Rect(sprite_x, sprite_y, sprite_width, sprite_height)
 
-image = pygame.image.load('img.png')
+# Set the initial speed
+sprite_speed = 1
 
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
 
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_LEFT]:
+        sprite.x -= sprite_speed
+    if keys[pygame.K_RIGHT]:
+        sprite.x += sprite_speed
+    if keys[pygame.K_UP]:
+        sprite.y -= sprite_speed
+    if keys[pygame.K_DOWN]:
+        sprite.y += sprite_speed
 
-runningStatus = True
-# game loop/ main
-while runningStatus:
- # to draw the object
-  pygame.draw.rect(screen,"red",player)
+    screen.fill(white)
+    pygame.draw.rect(screen, (0, 0, 255), sprite)
+    pygame.display.flip()
 
-
-  
-  key = pygame.key.get_pressed()
-  if key[pygame.K_UP]:
-    player.y += 1
-# Event handler
-  for event in pygame.event.get():
-    if event.type == pygame.QUIT:
-      runningStatus = False
-# we always have to update the scree so after creating different ements object get displayed in correct order
-  pygame.display.update()
-
-# closing the window/game
 pygame.quit()
-
-
