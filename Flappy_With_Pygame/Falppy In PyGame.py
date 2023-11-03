@@ -1,6 +1,8 @@
 # imports
 import pygame
 import math
+from pygame import mixer 
+
 # The line from pygame.locals import * is often used in Pygame scripts to import a set of constants
 #  and symbolic names that represent various keycodes, event types, and other constants used in Pygame. 
 # It's a convenient way to make these constants 
@@ -14,6 +16,16 @@ SCREEN_HEIGHT = 810
 SCREEN_WIDTH = 830
 screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
 pygame.display.set_caption("Flappy In PyGame")
+
+# sound
+# Starting the mixer 
+mixer.init() 
+# Loading the song 
+mixer.music.load(r"Codingal\PYGAME\Flappy_With_Pygame\helsound.mp3") 
+# Setting the volume 
+mixer.music.set_volume(0.3) 
+# Start playing the song 
+mixer.music.play() 
 
 
 # load image
@@ -31,13 +43,13 @@ class Bird(pygame.sprite.Sprite):
         self.index = 0
         self.counter = 0
         self.gravity = 0
-        self.groundStartsAt = 668
+        self.groundStartsAt = 650
         self.SPACE_clicked = False
-
-
+        self.soundEffectFactorHelicopter = 0
 
         for birdNum in range(1,4): 
-            img = pygame.image.load(fr"Codingal\PYGAME\Flappy_With_Pygame\bird{birdNum}.png")
+            img = pygame.image.load(fr"Codingal\PYGAME\Flappy_With_Pygame\hel{birdNum}.png")
+            img = pygame.transform.scale(img,(50,50))
             self.images.append(img)
         # this will create a reactable around the image, it's mandatory as the bird image 
         # might be of unusual shape
@@ -49,12 +61,9 @@ class Bird(pygame.sprite.Sprite):
     def update(self):
         # bird fall logic
         if self.gravity < 3:
-            self.gravity += 5
+            self.gravity += 1
         if self.rect.y < self.groundStartsAt:
            self.rect.y += self.gravity
-
-    
-
 
         # handles the animation
         self.counter += 1
@@ -67,6 +76,12 @@ class Bird(pygame.sprite.Sprite):
               self.index = 0
         self.image = self.images[self.index]
 
+        # replays helicopter sound effect
+        self.soundEffectFactorHelicopter += 1
+        if self.soundEffectFactorHelicopter == 2000:
+            self.soundEffectFactorHelicopter = 0
+            mixer.music.play()
+
             # bird fly logic
         if pygame.key.get_pressed()[K_SPACE] and self.rect.y>0 and self.SPACE_clicked == False:
             # self.SPACE_clicked = True
@@ -75,6 +90,8 @@ class Bird(pygame.sprite.Sprite):
 
         # bird rotation
         self.image = pygame.transform.rotate(self.images[self.index],self.gravity*-2)
+
+            
         
 
 
