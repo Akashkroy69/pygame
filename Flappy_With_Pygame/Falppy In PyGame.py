@@ -18,6 +18,7 @@ pygame.display.set_caption("Flappy In PyGame")
 
 # load image
 background = pygame.image.load(r'Codingal\PYGAME\Flappy_With_Pygame\flapbg.png')
+background = pygame.transform.rotate(background,180)
 ground = pygame.image.load(r'Codingal\PYGAME\Flappy_With_Pygame\ground.png')
 
 # 1 adding a bird using sprite
@@ -48,13 +49,10 @@ class Bird(pygame.sprite.Sprite):
     # To hadnle the animation overriding 
     def update(self):
         # bird fall logic
-        if self.gravity < 3:
-            self.gravity += 5
+        if self.gravity < 10:
+            self.gravity += 1
         if self.rect.y < self.groundStartsAt:
            self.rect.y += self.gravity
-
-    
-
 
         # handles the animation
         self.counter += 1
@@ -67,10 +65,13 @@ class Bird(pygame.sprite.Sprite):
               self.index = 0
         self.image = self.images[self.index]
 
-            # bird fly logic
-        if pygame.key.get_pressed()[K_SPACE] and self.rect.y>0 and self.SPACE_clicked == False:
+        # bird fly logic
+        if pygame.key.get_pressed()[K_SPACE] and self.rect.y>=10 and self.SPACE_clicked == False:
+            print("entering")
             # self.SPACE_clicked = True
-            self.rect.y -= 20
+            self.gravity -= 2
+            self.rect.y += self.gravity
+            print(f"y: {self.rect.y}, gravity: {self.gravity}")
             # self.image = pygame.transform.rotate(self.images[self.index],90)
 
         # bird rotation
