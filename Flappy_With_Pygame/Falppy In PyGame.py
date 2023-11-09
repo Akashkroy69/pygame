@@ -18,7 +18,7 @@ pygame.display.set_caption("Flappy In PyGame")
 
 # load image
 background = pygame.image.load(r'Codingal\PYGAME\Flappy_With_Pygame\flapbg.png')
-background = pygame.transform.rotate(background,180)
+# background = pygame.transform.rotate(background,180)
 ground = pygame.image.load(r'Codingal\PYGAME\Flappy_With_Pygame\ground.png')
 
 # 1 adding a bird using sprite
@@ -106,8 +106,9 @@ while runningStatus:
     screen.blit(ground,(ground_scroll,700))
     ground_scroll -= scroll_speed
 
-    # 3 drawing the object from bird group
+    # drawing the object from bird group
     bird_group.draw(screen)
+    # calling the overridden function update that will bring the movent to the bird
     bird_group.update()
 
     # code for continuous scroll effect
