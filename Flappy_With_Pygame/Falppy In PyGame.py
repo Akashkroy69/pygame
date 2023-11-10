@@ -67,15 +67,15 @@ class Bird(pygame.sprite.Sprite):
         self.image = self.images[self.index]
 
         # bird fly logic
-        if pygame.key.get_pressed()[K_SPACE] and self.rect>10 and self.SPACE_clicked == False:
+        if pygame.key.get_pressed()[K_SPACE] and self.rect.y>10 and self.SPACE_clicked == False:
             # print(f"{pygame.key.get_pressed()[K_SPACE]} and {self.rect.y>=100} and {self.SPACE_clicked == False:}")
             self.SPACE_clicked = True
             self.gravity -= 2
-            self.rect.y -= self.gravity
+            self.rect.y -= 5
             print(f"y: {self.rect.y}, gravity: {self.gravity}")
             # self.image = pygame.transform.rotate(self.images[self.index],90)
-        if self.SPACE_clicked == True:
-            self.SPACE_clicked = False
+        # if self.SPACE_clicked == True:
+        #     self.SPACE_clicked = False
 
         # bird rotation
         self.image = pygame.transform.rotate(self.images[self.index],self.gravity*-2)
@@ -125,7 +125,7 @@ while runningStatus:
     pipeGeneratingFactor +=1
     # setting up the frame rate
     clock.tick(fps)
-
+  
     # to render the image for background:LAYER 1
     screen.blit(background,(0,0))
 
