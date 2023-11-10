@@ -50,8 +50,8 @@ class Bird(pygame.sprite.Sprite):
     # To hadnle the animation overriding 
     def update(self):
         # bird fall logic
-        if self.gravity < 10:
-            self.gravity += 1
+        if self.gravity < 3:
+            self.gravity += 0.5
         if self.rect.y < self.groundStartsAt:
            self.rect.y += self.gravity
 
@@ -67,13 +67,15 @@ class Bird(pygame.sprite.Sprite):
         self.image = self.images[self.index]
 
         # bird fly logic
-        if pygame.key.get_pressed()[K_SPACE] and self.rect.y>=10 and self.SPACE_clicked == False:
-            print("entering")
-            # self.SPACE_clicked = True
+        if pygame.key.get_pressed()[K_SPACE] and self.SPACE_clicked == False:
+            print(f"{pygame.key.get_pressed()[K_SPACE]} and {self.rect.y>=100} and {self.SPACE_clicked == False:}")
+            self.SPACE_clicked = True
             self.gravity -= 2
-            self.rect.y += self.gravity
+            self.rect.y -= self.gravity
             print(f"y: {self.rect.y}, gravity: {self.gravity}")
             # self.image = pygame.transform.rotate(self.images[self.index],90)
+        if self.SPACE_clicked == True:
+            self.SPACE_clicked = False
 
         # bird rotation
         self.image = pygame.transform.rotate(self.images[self.index],self.gravity*-2)
@@ -85,7 +87,7 @@ class Pipe(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load(r"Codingal\PYGAME\Flappy_With_Pygame\pipe.png")
         self.rect = self.image.get_rect()
-        self.pipeGap = random.randint(100,400)
+        self.pipeGap = random.randint(100,600)
         if fromTop == 1:
             self.image = pygame.transform.flip(self.image,flip_x=False,flip_y=True)
             self.rect.bottomleft = [x,y-int(self.pipeGap/2)]
@@ -117,23 +119,25 @@ scroll_speed = 3
 runningStatus = True
 pipeFrequency = 1500
 lastPipe = pygame.time.get_ticks()
+pipeGeneratingFactor = 0
 # main game loop
 while runningStatus:
-
+    pipeGeneratingFactor +=1
     # setting up the frame rate
     clock.tick(fps)
 
     # to render the image for background:LAYER 1
     screen.blit(background,(0,0))
 
-
- # drawing the object from bird group: LAYER 2
-    bird_group.draw(screen)
-    # calling the overridden function update that will bring the movent to the bird
-    bird_group.update()
     # pipe draw and update
     pipe_group.draw(screen)
     pipe_group.update()
+
+    # drawing the object from bird group: LAYER 2
+    bird_group.draw(screen)
+    # calling the overridden function update that will bring the movent to the bird
+    bird_group.update()
+
 
     # to render image for ground: LAYER 3
     screen.blit(ground,(ground_scroll,700))
@@ -142,14 +146,15 @@ while runningStatus:
     # code for continuous scroll effect
     if runningStatus == True:
          timeNow = pygame.time.get_ticks()
-         print(timeNow)
-         if timeNow - lastPipe > pipeFrequency:
-             print(f"Time Now : {timeNow}, lastPipe: {lastPipe} diff: {timeNow - lastPipe}")
+        #  print(timeNow)
+         if pipeGeneratingFactor%100 == 0:
+            #  print(f"Time Now : {timeNow}, lastPipe: {lastPipe} diff: {timeNow - lastPipe}")
              bottomPipe = Pipe(SCREEN_WIDTH, int(SCREEN_HEIGHT/2) ,-1)
              topPipe = Pipe(SCREEN_WIDTH,int(SCREEN_HEIGHT/2),1)
              pipe_group.add(bottomPipe)
              pipe_group.add(topPipe)
-             lastPipe = timeNow
+            #  lastPipe = timeNow
+            #  pygame.time.wait(2000)
 
          if abs(ground_scroll) > 40:
             ground_scroll = 0
