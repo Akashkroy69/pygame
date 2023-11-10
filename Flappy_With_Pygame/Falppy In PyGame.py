@@ -67,8 +67,8 @@ class Bird(pygame.sprite.Sprite):
         self.image = self.images[self.index]
 
         # bird fly logic
-        if pygame.key.get_pressed()[K_SPACE] and self.SPACE_clicked == False:
-            print(f"{pygame.key.get_pressed()[K_SPACE]} and {self.rect.y>=100} and {self.SPACE_clicked == False:}")
+        if pygame.key.get_pressed()[K_SPACE] and self.rect>10 and self.SPACE_clicked == False:
+            # print(f"{pygame.key.get_pressed()[K_SPACE]} and {self.rect.y>=100} and {self.SPACE_clicked == False:}")
             self.SPACE_clicked = True
             self.gravity -= 2
             self.rect.y -= self.gravity
@@ -147,14 +147,12 @@ while runningStatus:
     if runningStatus == True:
          timeNow = pygame.time.get_ticks()
         #  print(timeNow)
-         if pipeGeneratingFactor%100 == 0:
-            #  print(f"Time Now : {timeNow}, lastPipe: {lastPipe} diff: {timeNow - lastPipe}")
+         if timeNow - lastPipe > pipeFrequency:
              bottomPipe = Pipe(SCREEN_WIDTH, int(SCREEN_HEIGHT/2) ,-1)
              topPipe = Pipe(SCREEN_WIDTH,int(SCREEN_HEIGHT/2),1)
              pipe_group.add(bottomPipe)
              pipe_group.add(topPipe)
-            #  lastPipe = timeNow
-            #  pygame.time.wait(2000)
+             lastPipe = timeNow
 
          if abs(ground_scroll) > 40:
             ground_scroll = 0
