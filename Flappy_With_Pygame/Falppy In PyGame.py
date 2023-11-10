@@ -11,14 +11,15 @@ from pygame.locals import *
 # initialization
 pygame.init()
 # screen setup
-SCREEN_HEIGHT = 810
+SCREEN_HEIGHT = 800
 SCREEN_WIDTH = 830
 screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
 pygame.display.set_caption("Flappy In PyGame")
 
 
 # load image
-background = pygame.image.load(r'Codingal\PYGAME\Flappy_With_Pygame\flapbg.png')
+background = pygame.image.load(r'Codingal\PYGAME\Flappy_With_Pygame\ev1.jpg')
+background1 = pygame.transform.flip(background,False,True)
 # background = pygame.transform.rotate(background,180)
 ground = pygame.image.load(r'Codingal\PYGAME\Flappy_With_Pygame\ground.png')
 
@@ -33,7 +34,7 @@ class Bird(pygame.sprite.Sprite):
         self.index = 0
         self.counter = 0
         self.gravity = 0
-        self.groundStartsAt = 668
+        self.groundStartsAt = 658
         self.SPACE_clicked = False
 
 
@@ -85,7 +86,7 @@ class Pipe(pygame.sprite.Sprite):
     #,fromTop: +1: from top, -1: from bottom
     def __init__(self,x,y,fromTop):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(r"Codingal\PYGAME\Flappy_With_Pygame\pipe.png")
+        self.image = pygame.image.load(r"Codingal\PYGAME\Flappy_With_Pygame\tower.png")
         self.rect = self.image.get_rect()
         self.pipeGap = random.randint(100,600)
         if fromTop == 1:
@@ -122,12 +123,14 @@ lastPipe = pygame.time.get_ticks()
 pipeGeneratingFactor = 0
 # main game loop
 while runningStatus:
+    screen.fill("skyblue")
     pipeGeneratingFactor +=1
     # setting up the frame rate
     clock.tick(fps)
   
     # to render the image for background:LAYER 1
-    screen.blit(background,(0,0))
+    # screen.blit(background1,(0,-300))
+    screen.blit(background,(0,-200))
 
     # pipe draw and update
     pipe_group.draw(screen)
@@ -140,7 +143,7 @@ while runningStatus:
 
 
     # to render image for ground: LAYER 3
-    screen.blit(ground,(ground_scroll,700))
+    screen.blit(ground,(ground_scroll,690))
     ground_scroll -= scroll_speed
 
     # code for continuous scroll effect
