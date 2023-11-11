@@ -112,6 +112,9 @@ class Pipe(pygame.sprite.Sprite):
     def update(self):
         if(flying):
            self.rect.x -= 4
+        #    if the pipe is moving to the x=0, we will kill the object, so it cleans the memory
+        if self.rect.right < 0:
+            self.kill()
 # 2 using sprite to make a goup of images, here group of bird images.
 #  this creates a list in which we can add our images
 bird_group = pygame.sprite.Group()
@@ -162,7 +165,7 @@ while runningStatus:
              pipe_group.add(bottomPipe)
              pipe_group.add(topPipe)
              lastPipe = timeNow
-             
+
          ground_scroll -= scroll_speed
          if abs(ground_scroll) > 40:
             ground_scroll = 0
