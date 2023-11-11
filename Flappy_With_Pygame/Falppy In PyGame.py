@@ -24,6 +24,9 @@ pipeFrequency = 1500
 lastPipe = pygame.time.get_ticks()
 pipeGeneratingFactor = 0
 flying = False
+# setting the frame rate
+clock = pygame.time.Clock()
+fps = 60
 
 
 # load image
@@ -128,16 +131,18 @@ topPipe = Pipe(300,int(SCREEN_HEIGHT/2),1)
 pipe_group.add(bottomPipe)
 pipe_group.add(topPipe)
 
-# setting the frame rate
-clock = pygame.time.Clock()
-fps = 60
+
 
 
 # main game loop
 while runningStatus:
-    pipeGeneratingFactor +=1
+    # pipeGeneratingFactor +=1
     # setting up the frame rate
     clock.tick(fps)
+
+    if pygame.sprite.groupcollide(bird_group,pipe_group,True,True):
+        runningStatus = False
+        pygame.time.wait(2000)
   
     # to render the image for background:LAYER 1
     screen.blit(background,(0,0))
